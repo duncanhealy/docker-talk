@@ -26,6 +26,123 @@ IMAGE_TAG=docker.pkg.github.com/${OWNER}/${REPOSITORY}/${IMAGE_NAME}:${TAG}
 
 ```
 
+![action permissions](i/action_permissions.png)
+
+-  build sucess after adding 
+```yaml
+name: helloworld
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest 
+    steps:
+    - name: Get the repos files by checkout
+      uses: actions/checkout@master
+    - name: Send the Docker Image to Githubs Package Registry
+      uses: machine-learning-apps/gpr-docker-publish@master
+      with:
+        cache: true
+#        branch_tag: true
+        IMAGE_NAME: 'helloworld'
+        TAG: 'latest'
+        DOCKERFILE_PATH: 'helloworld/Dockerfile'
+        BUILD_CONTEXT: './helloworld'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} ## this is the secret from your account
+
+# https://help.github.com/en/actions/reference/contexts-and-expression-syntax-for-github-actionsbuild_sucess_green_tick
+```
+
+
+![build_sucess_green_tick](build_sucess_green_tick.png)
+
+- add a badge :)
+
+![helloworld](https://github.com/duncanhealy/docker-talk/workflows/helloworld/badge.svg)
+
+- Workflow results
+
+![workflow_build_steps](workflow_build_steps.png)
+
+- view raw logs
+
+```txt
+2020-02-23T17:22:49.0113524Z Successfully built f58340cf28b8
+2020-02-23T17:22:49.0159237Z Successfully tagged docker.pkg.github.com/duncanhealy/docker-talk/helloworld:afcea8ea8ee8
+2020-02-23T17:22:49.0266913Z Successfully tagged docker.pkg.github.com/duncanhealy/docker-talk/helloworld:latest
+2020-02-23T17:22:49.0532414Z The push refers to repository [docker.pkg.github.com/duncanhealy/docker-talk/helloworld]
+2020-02-23T17:22:49.0827926Z 195be5f8be1d: Preparing
+2020-02-23T17:22:50.6228710Z 195be5f8be1d: Pushed
+```
+
+- try pull image 
+
+```
+docker pull docker.pkg.github.com/duncanhealy/docker-talk/helloworld:latest
+Error response from daemon: Get https://docker.pkg.github.com/v2/duncanhealy/docker-talk/helloworld/manifests/latest: no basic auth credentials
+```
+
+- private by default need to login to access
+
+
+goto https://github.com/duncanhealy/docker-talk/packages
+
+
+
+![package_built](package_built.png)
+
+
+
+Change to type docker 
+
+```
+# Step 1: Authenticate
+$ cat ~/GH_TOKEN.txt | docker login -u duncanhealy --password-stdin
+# Step 2: Tag
+$ docker tag IMAGE_ID docker.pkg.github.com/duncanhealy/docker-talk/IMAGE_NAME:VERSION
+# Step 3: Publish
+$ docker push docker.pkg.github.com/duncanhealy/docker-talk/IMAGE_NAME:VERSION
+```
+
+- after login
+
+- docker pull 
+```docker pull docker.pkg.github.com/duncanhealy/docker-talk/helloworld:afcea8ea8ee8```
+
+- use this as a base image
+
+- 
+```Dockerfile
+FROM docker.pkg.github.com/duncanhealy/docker-talk/helloworld:afcea8ea8ee8
+````
+
+
+### Build and push manually
+
+- login
+```docker login -u USERNAME -p TOKEN docker.pkg.github.com```
+
+- check local images
+```shell
+docker images
+IMAGE_ID=123
+```
+
+- tag a local image
+
+```shell
+docker tag ${IMAGE_ID} docker.pkg.github.com/${OWNER}/${REPOSITORY}/${IMAGE_NAME}:${VERSION}
+```
+
+- push to registry
+```shell
+docker.pkg.github.com/${OWNER}/${REPOSITORY}/${IMAGE_NAME}:${VERSION}
+```
+
+```shell
+## . == path
+ docker build -t docker.pkg.github.com/${OWNER}/${REPOSITORY}/${IMAGE_NAME}:${VERSION} .
+ ```
 
 ## Dockerhub
 
