@@ -170,6 +170,60 @@ Here are some reasons why containers took off
 
 the image is 238433 in size before committing - 
 
+I create a pull request to test the compress action
+
+![action_running](action_running.png)
+
+- An email arrives ty Actions
+
+Compression reduced images by 34.7%, saving 113.54 KB
+
+
+|Filename|Before|After|Improvement
+---|---|---|---
+build_sucess_green_tick.png| 13.97 KB|  10.39 KB|  -25.6%
+i/action_permissions.png|  151.95 KB| 100.10 KB| -34.1%
+package_built.png|	29.78 KB|  19.34 KB|  -35.1%
+packages_post_secondbuild.png| 21.63 KB|  13.46 KB|  -37.8%
+workflow_build_steps.png|  109.59 KB| 70.09 KB|	-36.0
+
+%Some images were already optimised
+i/dockerhubs.png
+i/soreeyes.png
+i/why_containers.jpg
+```
+
+- this is another huge reason to use containers - automated tasks :) 
+
+- lets download [gh](https://github.blog/2020-02-12-supercharge-your-command-line-experience-github-cli-is-now-in-beta/) and close this pull request
+
+- too many choices to install
+
+```shell
+npm i -g gh
+
+## or 
+
+wget  https://github.com/cli/cli/releases/download/v0.5.7/gh_0.5.7_linux_amd64.tar.gz
+tar -zxf gh_0.5.7_linux_amd64.tar.gz
+mv gh_0.5.7_linux_amd64/bin/gh /usr/local/bin
+source <(gh completion -s bash)
+
+## apt
+sudo dpkg -i gh_*_linux_amd64.deb
+
+sudo apt install gitsome
+
+## snap
+
+snap install --classic gh
+
+## 
+# download deb
+sudo dpkg -i gh_*_linux_amd64.deb
+
+```
+
 ### Build and push manually
 
 - login
