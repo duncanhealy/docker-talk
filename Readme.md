@@ -120,7 +120,7 @@ docker pull docker.pkg.github.com/duncanhealy/docker-talk/helloworld:afcea8ea8ee
 
 ```Dockerfile
 FROM docker.pkg.github.com/duncanhealy/docker-talk/helloworld:afcea8ea8ee8
-CMD echo "what kind of reply will you see from helloworld"
+CMD echo "what kind of reply will you see from helloworld2"
 ````
 
 - we add a build for this helloworld2
@@ -128,6 +128,9 @@ CMD echo "what kind of reply will you see from helloworld"
 - add another action to see how multiple actions can be run in parralel
 
 ![packages_post_secondbuild](packages_post_secondbuild.png)
+
+- [Calibreapp](https://github.com/calibreapp/image-actions) 
+
 
 ```yaml
 name: Compress images
@@ -156,6 +159,16 @@ jobs:
 
 ```
 
+
+## Containers
+
+Thanks to Julia @b0rk https://wizardzines.com/ we have some excellent learning material on containers and beyond
+
+Here are some reasons why containers took off 
+
+![whycontainers](i/why_containers.jpg) 
+
+the image is 238433 in size before committing - 
 
 ### Build and push manually
 
