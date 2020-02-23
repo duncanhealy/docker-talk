@@ -127,6 +127,8 @@ CMD echo "what kind of reply will you see from helloworld"
 
 - add another action to see how multiple actions can be run in parralel
 
+![packages_post_secondbuild](packages_post_secondbuild.png)
+
 ```yaml
 name: Compress images
 on: 
