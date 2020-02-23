@@ -1,0 +1,21 @@
+name: helloworld
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest 
+    steps:
+    - name: Get the repos files by checkout
+      uses: actions/checkout@master
+    - name: Send the Docker Image to Githubs Package Registry
+      uses: machine-learning-apps/gpr-docker-publish@master
+      with:
+        cache: true
+#        branch_tag: true
+        IMAGE_NAME: 'helloworld2'
+        TAG: 'latest'
+        DOCKERFILE_PATH: 'helloworld2/Dockerfile'
+        BUILD_CONTEXT: './helloworld2'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} ## this is the secret from your account
+
+# https://help.github.com/en/actions/reference/contexts-and-expression-syntax-for-github-actionsbuild_sucess_green_tick

@@ -107,14 +107,52 @@ $ docker push docker.pkg.github.com/duncanhealy/docker-talk/IMAGE_NAME:VERSION
 - after login
 
 - docker pull 
-```docker pull docker.pkg.github.com/duncanhealy/docker-talk/helloworld:afcea8ea8ee8```
+
+```shell
+docker pull docker.pkg.github.com/duncanhealy/docker-talk/helloworld:afcea8ea8ee8
+```
 
 - use this as a base image
 
-- 
+- modify based on this image
+
+- new Dockerfile 
+
 ```Dockerfile
 FROM docker.pkg.github.com/duncanhealy/docker-talk/helloworld:afcea8ea8ee8
+CMD echo "what kind of reply will you see from helloworld"
 ````
+
+- we add a build for this helloworld2
+
+- add another action to see how multiple actions can be run in parralel
+
+```yaml
+name: Compress images
+on: 
+  push:
+    paths:
+      - '**.jpg'
+      - '**.png'
+      - '**.webp'
+jobs:
+  build:
+    name: calibreapp/image-actions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+
+      - name: Compress Images
+        uses: calibreapp/image-actions@master
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          jpegQuality: "80"
+          pngQuality: "80"
+          webpQuality: "80"
+          ignorePaths: "node_modules/**,build"
+
+```
 
 
 ### Build and push manually
